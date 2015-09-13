@@ -7,19 +7,23 @@
  * @type {Function}
  */
 module.exports = {
-    FileModel: (function(){
-        function FileModel(code, options){
+    FileModel: (function () {
+        function FileModel(code, options) {
             options || (options = {});
 
             this.code = code || "";
-            this.blobId = options.blob_id;
-            this.commitId = options.commit_id;
-            this.content = options.content;
-            this.encoding = options.encoding;
-            this.fileName = options.file_name;
-            this.filePath = options.file_path;
-            this.ref = options.ref;
-            this.size = options.size;
+            this.file = {};
+            this.commit = options.commit;
+            this.user = options.user;
+
+            this.file.blobId = options.file.blob_id;
+            this.file.commitId = options.file.commit_id;
+            this.file.content = options.file.content;
+            this.file.encoding = options.file.encoding;
+            this.file.fileName = options.file.file_name;
+            this.file.filePath = options.file.file_path;
+            this.file.ref = options.file.ref;
+            this.file.size = options.file.size;
         }
 
         return FileModel;
