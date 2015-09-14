@@ -1,0 +1,9 @@
+body {
+    padding-top: 50px;
+}
+
+.form-control {
+    box-sizing: border-box;
+    box-shadow: none;
+    border: 0px;
+}

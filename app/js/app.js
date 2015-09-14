@@ -1,17 +1,19 @@
 /**
  * Created by Zaur_Ismailov on 9/11/2015.
  */
+
 var rp = require("./js/repositoryProvider");
 var fs = require("fs");
 var _ = require("lodash");
 var Q = require("q");
+var ViewFileModel = require("./js/ViewModels/FileModel")(kendo.jQuery, kendo);
 
-(function (window, $, kendo) {
+(function(window, $, kendo) {
     var model = kendo.observable({
         title: "File list",
         actions: [
-            {name: "Upload", code: "upload"},
-            {name: "Download", code: "download"}
+            { name: "Upload", code: "upload" },
+            { name: "Download", code: "download" }
         ]
     });
 
@@ -22,7 +24,12 @@ var Q = require("q");
     kendo.ui.progress($main, true);
 
     rp.getList(config.paths, config.projectId, config.branch, config.pk)
-        .then(function (files) {
+        .then(function(files) {
+            return _.map(files, function(v) {
+                return new ViewFileModel(v);
+            })
+        })
+        .then(function(files) {
             var tmpl = $("#containerTmpl").html();
 
             model.set("filesList", files);

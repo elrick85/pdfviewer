@@ -5,10 +5,11 @@
     <link href="vendors/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="vendors/kendo/styles/kendo.common.min.css" rel="stylesheet">
     <link href="vendors/kendo/styles/kendo.material.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
     <title>Pdf Viewer</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -30,20 +31,18 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<div id="main-view" class="container">
-
-</div>
+<div id="main-view" class="container-fluid"></div>
 
 <script id="containerTmpl" type="text/x-kendo-template">
     <h1>${title}</h1>
     <table class="table">
         <thead>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Size</th>
-            <th>UserName</th>
-            <th>Date</th>
-            <th>Actions</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Size</th>
+        <th>UserName</th>
+        <th>Date</th>
+        <th>Actions</th>
         </thead>
         <tbody data-template="listTmpl" data-bind="source: filesList"></tbody>
     </table>
@@ -54,10 +53,48 @@
         <td>${code}</td>
         <td>${data.file.fileName}</td>
         <td>${data.file.size}</td>
-        <td>${data.commit.}</td>
-        <td></td>
-        <td></td>
+        <td>${data.user.username}</td>
+        <td>#=kendo.toString(data.commit.committed_date, "G")#</td>
+        <td>
+            <a href="\#" class="btn row-update" data-bind="click: showUpload">Update</a>
+            <a href="\#" class="btn export-project" data-bind="click: showExport">Export</a>
+        </td>
     </tr>
+</script>
+
+<script id="uploadTmpl" type="text/x-kendo-template">
+    <div class="container-fluid">
+        <form>
+            <input type="hidden" name="code">
+
+            <div class="form-group">
+                <label for="uploadedFile">Uploaded file</label>
+                <input type="file" name="uploadedFile" class="form-control" id="uploadedFile">
+            </div>
+            <div class="form-group">
+                <label for="commitMessage">Comment</label>
+                <div>
+                    <textarea rows="5" name="commitMessage" id="commitMessage" style="width: 100%"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</script>
+
+<script id="exportTmpl" type="text/x-kendo-template">
+    <div class="container-fluid">
+        <form>
+            <input type="hidden" name="code">
+
+            <div class="form-group">
+                <label for="projectName">Project Name</label>
+                <input type="text" name="projectName" class="form-control" id="projectName">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
 </script>
 
 <script src="vendors/kendo/js/jquery.min.js"></script>
